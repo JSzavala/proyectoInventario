@@ -97,6 +97,12 @@
   <ItemGroup>
     <Compile Include="backEnd\conexionBd\clsConexionBd.cs" />
     <Compile Include="backEnd\conexionBd\clsConsultas.cs" />
+    <Compile Include="backEnd\POCOS\Categoria.cs" />
+    <Compile Include="backEnd\POCOS\DetalleFactura.cs" />
+    <Compile Include="backEnd\POCOS\Factura.cs" />
+    <Compile Include="backEnd\POCOS\Producto.cs" />
+    <Compile Include="backEnd\POCOS\Proveedor.cs" />
+    <Compile Include="backEnd\POCOS\Usuario.cs" />
     <Compile Include="frontEnd\frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -128,8 +134,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="backEnd\POJOS\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
