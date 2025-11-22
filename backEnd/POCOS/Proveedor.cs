@@ -11,27 +11,20 @@ namespace proyectoInventario.backEnd.POCOS
     /// </summary>
     internal class Proveedor
     {
-      public int IdProveedores { get; set; }
+        public int IdProveedores { get; set; }
         public string Nombre { get; set; }
         public string Telefono { get; set; }
         public string Email { get; set; }
-   public string Direccion { get; set; }
+        public string Direccion { get; set; }
 
         /// <summary>
-        /// Constructor por defecto
-    /// </summary>
-      public Proveedor()
-      {
-        }
-
-     /// <summary>
         /// Constructor con parámetros
         /// </summary>
         public Proveedor(int idProveedores, string nombre, string telefono, string email, string direccion = null)
         {
             IdProveedores = idProveedores;
-  Nombre = nombre;
- Telefono = telefono;
+            Nombre = nombre;
+            Telefono = telefono;
             Email = email;
             Direccion = direccion;
         }

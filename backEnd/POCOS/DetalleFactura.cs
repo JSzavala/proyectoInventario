@@ -15,38 +15,31 @@ namespace proyectoInventario.backEnd.POCOS
         public short Cantidad { get; set; }
         public decimal PrecioUnitario { get; set; }
         public int IdFactura { get; set; }
-    public int IdProducto { get; set; }
+        public int IdProducto { get; set; }
 
-   // Propiedades de navegación (opcional)
+        // Propiedades de navegación (opcional)
         public Factura Factura { get; set; }
-     public Producto Producto { get; set; }
+        public Producto Producto { get; set; }
 
         /// <summary>
-    /// Propiedad calculada para obtener el subtotal
+        /// Propiedad calculada para obtener el subtotal
         /// </summary>
-   public decimal Subtotal
-      {
+        public decimal Subtotal
+        {
             get { return Cantidad * PrecioUnitario; }
-        }
-
-        /// <summary>
-        /// Constructor por defecto
-        /// </summary>
-        public DetalleFactura()
-      {
         }
 
         /// <summary>
         /// Constructor con parámetros
         /// </summary>
         public DetalleFactura(int idDetalleFactura, short cantidad, decimal precioUnitario, 
-     int idFactura, int idProducto)
+        int idFactura, int idProducto)
         {
-         IdDetalleFactura = idDetalleFactura;
+            IdDetalleFactura = idDetalleFactura;
             Cantidad = cantidad;
-          PrecioUnitario = precioUnitario;
+            PrecioUnitario = precioUnitario;
             IdFactura = idFactura;
-    IdProducto = idProducto;
-      }
+            IdProducto = idProducto;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace proyectoInventario.backEnd.POCOS
     /// </summary>
     public enum RolUsuario
     {
- Dueña,
+        Dueña,
         Empleado
     }
 
@@ -27,22 +27,15 @@ namespace proyectoInventario.backEnd.POCOS
         public RolUsuario Rol { get; set; }
 
         /// <summary>
-   /// Constructor por defecto
-        /// </summary>
-        public Usuario()
-        {
-   }
-
-        /// <summary>
         /// Constructor con parámetros
-  /// </summary>
+        /// </summary>
         public Usuario(int idUsuario, string nombre, string usuarioNombre, string contrasena, RolUsuario rol)
         {
-      IdUsuario = idUsuario;
-   Nombre = nombre;
-  UsuarioNombre = usuarioNombre;
+            IdUsuario = idUsuario;
+            Nombre = nombre;
+            UsuarioNombre = usuarioNombre;
             Contrasena = contrasena;
-     Rol = rol;
- }
+            Rol = rol;
+        }
     }
 }

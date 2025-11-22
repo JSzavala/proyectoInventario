@@ -12,7 +12,7 @@ namespace proyectoInventario.backEnd.POCOS
     public enum TipoFactura
     {
         Compra,
- Venta
+        Venta
     }
 
     /// <summary>
@@ -23,29 +23,21 @@ namespace proyectoInventario.backEnd.POCOS
         public int IdFacturaVenta { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
-  public TipoFactura TipoFactura { get; set; }
+        public TipoFactura TipoFactura { get; set; }
 
         // Propiedad de navegación para los detalles de la factura
         public List<DetalleFactura> Detalles { get; set; }
 
- /// <summary>
-        /// Constructor por defecto
-        /// </summary>
-        public Factura()
-  {
-      Detalles = new List<DetalleFactura>();
-        }
-
         /// <summary>
         /// Constructor con parámetros
-/// </summary>
+        /// </summary>
         public Factura(int idFacturaVenta, DateTime fecha, decimal total, TipoFactura tipoFactura)
         {
-       IdFacturaVenta = idFacturaVenta;
-    Fecha = fecha;
+           IdFacturaVenta = idFacturaVenta;
+            Fecha = fecha;
             Total = total;
-       TipoFactura = tipoFactura;
-    Detalles = new List<DetalleFactura>();
-     }
+            TipoFactura = tipoFactura;
+            Detalles = new List<DetalleFactura>();
+        }
     }
 }
