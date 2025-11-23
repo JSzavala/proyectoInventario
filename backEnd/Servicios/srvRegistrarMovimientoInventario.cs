@@ -9,7 +9,7 @@ using MySql.Data.MySqlClient;
 
 namespace proyectoInventario.backEnd.Servicios
 {
-    internal class srvRegistrarEntradaInventario
+    internal class srvRegistrarMovimientoInventario
     {
         private clsConexionBd conexionBd;
         private clsConsultas consultas;
@@ -17,7 +17,7 @@ namespace proyectoInventario.backEnd.Servicios
         /// <summary>
         /// Constructor que inicializa la conexión a la base de datos
         /// </summary>
-        public srvRegistrarEntradaInventario()
+        public srvRegistrarMovimientoInventario()
         {
             conexionBd = new clsConexionBd();
             consultas = new clsConsultas();
