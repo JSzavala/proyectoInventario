@@ -103,6 +103,7 @@
     <Compile Include="backEnd\POCOS\Producto.cs" />
     <Compile Include="backEnd\POCOS\Proveedor.cs" />
     <Compile Include="backEnd\POCOS\Usuario.cs" />
+    <Compile Include="backEnd\Servicios\srvRegistrarEntradaInventario.cs" />
     <Compile Include="frontEnd\frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,8 +135,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="backEnd\Servicios\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
