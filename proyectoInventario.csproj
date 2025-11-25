@@ -110,6 +110,48 @@
     <Compile Include="frontEnd\frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="frontEnd\Ventanas2\Buscar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\Buscar.Designer.cs">
+      <DependentUpon>Buscar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\Descontinuar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\Descontinuar.Designer.cs">
+      <DependentUpon>Descontinuar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\Main.Designer.cs">
+      <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\RegistrarCompra.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\RegistrarCompra.Designer.cs">
+      <DependentUpon>RegistrarCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\RegistrarProducto.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\RegistrarProducto.Designer.cs">
+      <DependentUpon>RegistrarProducto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\RegistrarUsuarios.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\RegistrarUsuarios.Designer.cs">
+      <DependentUpon>RegistrarUsuarios.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -131,6 +173,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="update_project.ps1" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
