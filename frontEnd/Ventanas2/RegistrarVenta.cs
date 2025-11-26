@@ -10,7 +10,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace ProyectoEfren2
+namespace proyectoInventario
 {
 	/// <summary>
 	/// Description of RegistrarVenta.
@@ -29,9 +29,16 @@ namespace ProyectoEfren2
 			//
 		}
 		
-		void RegistrarVentaLoad(object sender, EventArgs e)
+		private void BtnVolver_Click(object sender, EventArgs e)
 		{
-			
+			Main frmMain = new Main();
+			frmMain.Show();
+			this.Close();
+		}
+		
+		private void RegistrarVentaLoad(object sender, EventArgs e)
+		{
+			// Evento de carga del formulario
 		}
 	}
 }

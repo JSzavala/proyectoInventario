@@ -105,17 +105,20 @@ this.btnAgregarInv.Text = "Agregar al Inventario";
    // 
      // btnVolver
 // 
-this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(13)))), ((int)(((byte)(32)))));
- this.btnVolver.Cursor = System.Windows.Forms.Cursors.Hand;
+this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(50)))), ((int)(((byte)(86)))));
+this.btnVolver.Cursor = System.Windows.Forms.Cursors.Hand;
 this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-this.btnVolver.Image = ((System.Drawing.Image)(resources.GetObject("btnVolver.Image")));
-   this.btnVolver.Location = new System.Drawing.Point(22, 21);
+this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+this.btnVolver.ForeColor = System.Drawing.Color.White;
+this.btnVolver.Location = new System.Drawing.Point(22, 21);
 this.btnVolver.Name = "btnVolver";
-this.btnVolver.Size = new System.Drawing.Size(46, 38);
+this.btnVolver.Size = new System.Drawing.Size(75, 38);
 this.btnVolver.TabIndex = 0;
- this.btnVolver.UseVisualStyleBackColor = false;
-  // 
-  // dgvProductos
+this.btnVolver.Text = "Volver";
+this.btnVolver.UseVisualStyleBackColor = false;
+this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
+// 
+// dgvProductos
     // 
  this.dgvProductos.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(35)))));
  this.dgvProductos.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -162,7 +165,7 @@ this.Controls.Add(this.txtStockInicial);
   this.Controls.Add(this.txtNombreProducto);
 this.Controls.Add(this.txtIDProducto);
   this.Controls.Add(this.lblTitleMain);
-  this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+  //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
   this.Name = "RegistrarProducto";
       this.Text = "Registrar Producto";
   ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).EndInit();

@@ -122,6 +122,15 @@
     <Compile Include="frontEnd\Ventanas2\Descontinuar.Designer.cs">
       <DependentUpon>Descontinuar.cs</DependentUpon>
     </Compile>
+    <Compile Include="frontEnd\Ventanas2\RegistrarCompra.Designer.cs">
+      <DependentUpon>RegistrarCompra.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\RegistrarVenta.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\RegistrarVenta.Designer.cs">
+      <DependentUpon>RegistrarVenta.cs</DependentUpon>
+    </Compile>
     <Compile Include="frontEnd\Ventanas2\Login.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,9 +146,6 @@
     <Compile Include="frontEnd\Ventanas2\RegistrarCompra.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frontEnd\Ventanas2\RegistrarCompra.Designer.cs">
-      <DependentUpon>RegistrarCompra.cs</DependentUpon>
-    </Compile>
     <Compile Include="frontEnd\Ventanas2\RegistrarProducto.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frontEnd\Ventanas2\Main.resx">
+      <DependentUpon>Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frontEnd\Ventanas2\RegistrarCompra.resx">
+      <DependentUpon>RegistrarCompra.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

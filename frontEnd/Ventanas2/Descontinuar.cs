@@ -29,9 +29,16 @@ namespace proyectoInventario
        //
     }
         
-        void LblTitleMainClick(object sender, EventArgs e)
-    {
-            
+        private void BtnVolver_Click(object sender, EventArgs e)
+        {
+   Main frmMain = new Main();
+frmMain.Show();
+   this.Close();
+}
+   
+ private void LblTitleMainClick(object sender, EventArgs e)
+        {
+    // Evento del label (sin funcionalidad específica)
  }
     }
 }

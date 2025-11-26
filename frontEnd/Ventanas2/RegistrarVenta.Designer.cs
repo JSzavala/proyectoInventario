@@ -6,7 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
-namespace ProyectoEfren2
+namespace proyectoInventario
 {
 	partial class RegistrarVenta
 	{
@@ -85,15 +85,18 @@ namespace ProyectoEfren2
 			// 
 			// btnVolver
 			// 
-			this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(13)))), ((int)(((byte)(32)))));
+			this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(50)))), ((int)(((byte)(86)))));
 			this.btnVolver.Cursor = System.Windows.Forms.Cursors.Hand;
 			this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnVolver.Image = ((System.Drawing.Image)(resources.GetObject("btnVolver.Image")));
+			this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnVolver.ForeColor = System.Drawing.Color.White;
 			this.btnVolver.Location = new System.Drawing.Point(12, 12);
 			this.btnVolver.Name = "btnVolver";
-			this.btnVolver.Size = new System.Drawing.Size(46, 38);
+			this.btnVolver.Size = new System.Drawing.Size(75, 38);
 			this.btnVolver.TabIndex = 11;
+			this.btnVolver.Text = "Volver";
 			this.btnVolver.UseVisualStyleBackColor = false;
+			this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
 			// 
 			// RegistrarVenta
 			// 
@@ -106,7 +109,7 @@ namespace ProyectoEfren2
 			this.Controls.Add(this.txtCantidad);
 			this.Controls.Add(this.txtIDProducto);
 			this.Controls.Add(this.lblTitleMain);
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+			//this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.Name = "RegistrarVenta";
 			this.Text = "Registrar Venta";
 			this.Load += new System.EventHandler(this.RegistrarVentaLoad);

@@ -28,5 +28,12 @@ InitializeComponent();
    // TODO: Add constructor code after the InitializeComponent() call.
     //
     }
-  }
+        
+        private void BtnVolver_Click(object sender, EventArgs e)
+        {
+            Main frmMain = new Main();
+            frmMain.Show();
+            this.Close();
+        }
+    }
 }

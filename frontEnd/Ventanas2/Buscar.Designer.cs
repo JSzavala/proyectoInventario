@@ -102,15 +102,18 @@ this.dgvProductos.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderS
      // 
        // btnVolver
    // 
-  this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(13)))), ((int)(((byte)(32)))));
-        this.btnVolver.Cursor = System.Windows.Forms.Cursors.Hand;
-       this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-        this.btnVolver.Image = ((System.Drawing.Image)(resources.GetObject("btnVolver.Image")));
-    this.btnVolver.Location = new System.Drawing.Point(12, 12);
+  this.btnVolver.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(50)))), ((int)(((byte)(86)))));
+this.btnVolver.Cursor = System.Windows.Forms.Cursors.Hand;
+this.btnVolver.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+this.btnVolver.ForeColor = System.Drawing.Color.White;
+this.btnVolver.Location = new System.Drawing.Point(12, 12);
 this.btnVolver.Name = "btnVolver";
-         this.btnVolver.Size = new System.Drawing.Size(46, 38);
-  this.btnVolver.TabIndex = 12;
-       this.btnVolver.UseVisualStyleBackColor = false;
+this.btnVolver.Size = new System.Drawing.Size(75, 38);
+this.btnVolver.TabIndex = 12;
+this.btnVolver.Text = "Volver";
+this.btnVolver.UseVisualStyleBackColor = false;
+this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
     // 
     // label1
             // 
@@ -135,7 +138,7 @@ this.btnVolver.Name = "btnVolver";
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.txtIDProducto);
  this.Controls.Add(this.lblTitleMain);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Buscar";
   this.Text = "Buscar Producto";
        ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).EndInit();
