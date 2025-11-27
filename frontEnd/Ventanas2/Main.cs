@@ -6,6 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+using proyectoInventario.backEnd.POCOS;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -59,7 +60,7 @@ namespace proyectoInventario
   
         private void BtnRegistrarVenta_Click(object sender, EventArgs e)
      {
- RegistrarVenta frmRegistrarVenta = new RegistrarVenta();
+ RegistrarVenta frmRegistrarVenta = new RegistrarVenta(RolUsuario.Dueña);
         frmRegistrarVenta.Show();
 this.Hide();
         }

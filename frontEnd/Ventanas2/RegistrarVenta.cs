@@ -6,6 +6,7 @@
  * 
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
+using proyectoInventario.backEnd.POCOS;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -17,7 +18,7 @@ namespace proyectoInventario
 	/// </summary>
 	public partial class RegistrarVenta : Form
 	{
-		public RegistrarVenta()
+		public RegistrarVenta(RolUsuario rolUsuario)
 		{
 			//
 			// The InitializeComponent() call is required for Windows Forms designer support.
