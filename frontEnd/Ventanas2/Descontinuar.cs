@@ -32,22 +32,36 @@ namespace proyectoInventario
         
         private void BtnVolver_Click(object sender, EventArgs e)
         {
-           Main frmMain = new Main();
-           frmMain.Show();
-           this.Close();
-        }
-
-
-        private void LblTitleMainClick(object sender, EventArgs e)
-                {
-            // Evento del label (sin funcionalidad específica)
-         }
+   Main frmMain = new Main();
+frmMain.Show();
+   this.Close();
+}
+   
+ private void LblTitleMainClick(object sender, EventArgs e)
+        {
     // Evento del label (sin funcionalidad específica)
-        }
+ }
 
         private void btnRegistrarCompra_Click(object sender, EventArgs e)
         {
-              
+            if (int.TryParse(txtIDProducto.Text, out int idProducto))
+            {
+                clsConsultas consultas = new clsConsultas();
+                bool resultado = consultas.DescontinuarProducto(idProducto);
+
+                if (resultado)
+                {
+                    MessageBox.Show("Producto descontinuado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo descontinuar el producto. Verifica el ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingrese un ID de producto válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

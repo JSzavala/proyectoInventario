@@ -67,7 +67,7 @@ namespace proyectoInventario
             this.btnRegistrarCompra.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRegistrarCompra.ForeColor = System.Drawing.Color.White;
             this.btnRegistrarCompra.Location = new System.Drawing.Point(321, 117);
-            this.btnRegistrarCompra.Margin = new System.Windows.Forms.Padding(4);
+            this.btnRegistrarCompra.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnRegistrarCompra.Name = "btnRegistrarCompra";
             this.btnRegistrarCompra.Size = new System.Drawing.Size(147, 33);
             this.btnRegistrarCompra.TabIndex = 10;
@@ -78,7 +78,7 @@ namespace proyectoInventario
             // txtIDProducto
             // 
             this.txtIDProducto.Location = new System.Drawing.Point(76, 123);
-            this.txtIDProducto.Margin = new System.Windows.Forms.Padding(4);
+            this.txtIDProducto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtIDProducto.Name = "txtIDProducto";
             this.txtIDProducto.Size = new System.Drawing.Size(205, 22);
             this.txtIDProducto.TabIndex = 11;
@@ -91,7 +91,7 @@ namespace proyectoInventario
             this.btnVolver.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVolver.ForeColor = System.Drawing.Color.White;
             this.btnVolver.Location = new System.Drawing.Point(16, 15);
-            this.btnVolver.Margin = new System.Windows.Forms.Padding(4);
+            this.btnVolver.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnVolver.Name = "btnVolver";
             this.btnVolver.Size = new System.Drawing.Size(100, 47);
             this.btnVolver.TabIndex = 13;
@@ -115,7 +115,7 @@ namespace proyectoInventario
             this.dgvProductos.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvProductos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvProductos.Location = new System.Drawing.Point(32, 202);
-            this.dgvProductos.Margin = new System.Windows.Forms.Padding(4);
+            this.dgvProductos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.dgvProductos.Name = "dgvProductos";
             this.dgvProductos.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.dgvProductos.RowHeadersWidth = 51;
@@ -146,7 +146,7 @@ namespace proyectoInventario
             this.Controls.Add(this.txtIDProducto);
             this.Controls.Add(this.btnRegistrarCompra);
             this.Controls.Add(this.lblTitleMain);
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Descontinuar";
             this.Text = "Descontinuar";
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).EndInit();

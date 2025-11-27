@@ -62,7 +62,6 @@ namespace proyectoInventario
                 }
                 else
                 {
-
                     RegistrarVenta vendedorForm = new RegistrarVenta(RolUsuario.Empleado);
                     vendedorForm.Show();
                 }
