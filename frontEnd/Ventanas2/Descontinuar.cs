@@ -24,7 +24,7 @@ namespace proyectoInventario
             //
             // The InitializeComponent() call is required for Windows Forms designer support.
             //
-            CargarProductos()
+            CargarProductos();
             InitializeComponent();
     //
     // TODO: Add constructor code after the InitializeComponent() call.
@@ -45,29 +45,34 @@ namespace proyectoInventario
         private void CargarProductos()
         {
             clsConsultas consultas = new clsConsultas();
-            DataTable productos = consultas.Select("SELECT IdProducto, Nombre, StockActual, Descontinuado FROM Producto WHERE Descontinuado = 0");
-            dgvProductos.DataSource = productos;
+            // Actualizado para la nueva estructura de BD
+            DataTable productos = consultas.Select("SELECT CLAVE, NOMBRE, PRECIO, STOCK FROM Producto");
+   dgvProductos.DataSource = productos;
         }
+        
         private void btnRegistrarCompra_Click(object sender, EventArgs e)
         {
-            if (int.TryParse(txtIDProducto.Text, out int idProducto))
-            {
-                clsConsultas consultas = new clsConsultas();
-                bool resultado = consultas.DescontinuarProducto(idProducto);
+        string claveProducto = txtIDProducto.Text.Trim();
+      
+       if (string.IsNullOrWhiteSpace(claveProducto))
+   {
+   MessageBox.Show("Ingrese una clave de producto válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+       return;
+   }
+       
+ clsConsultas consultas = new clsConsultas();
+   bool resultado = consultas.DescontinuarProducto(claveProducto);
 
-                if (resultado)
-                {
-                    MessageBox.Show("Producto descontinuado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("No se pudo descontinuar el producto. Verifica el ID.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("Ingrese un ID de producto válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
+     if (resultado)
+  {
+     MessageBox.Show("Producto eliminado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+     CargarProductos(); // Recargar la lista
+           txtIDProducto.Clear();
+   }
+     else
+     {
+    MessageBox.Show("No se pudo eliminar el producto. Verifica la clave.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+       }
+ }
     }
 }

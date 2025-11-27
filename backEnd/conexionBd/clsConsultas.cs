@@ -284,18 +284,25 @@ namespace proyectoInventario.backEnd.conexionBd
             return null; // si no encontró usuario
         }
 
-        // se realisa la actualizacion en el producto en el atributo Descontinuado
-        // Combirtiendolo a true o en bynario 1
-        public bool DescontinuarProducto(int idProducto)
-        {
-            string consulta = "UPDATE Producto SET Descontinuado = 1 WHERE IdProducto = @idProducto";
-            var parametros = new Dictionary<string, object>
-            {
-                {"@idProducto", idProducto}
+        // se realiza la actualización en el producto para marcarlo como descontinuado
+        // NOTA: En la nueva BD no existe el campo Descontinuado
+    // Se puede implementar eliminando el producto o manejándolo de otra forma
+        public bool DescontinuarProducto(string claveProducto)
+  {
+       // Opción 1: Eliminar el producto (según nueva BD)
+            string consulta = "DELETE FROM Producto WHERE CLAVE = @clave";
+   var parametros = new Dictionary<string, object>
+   {
+ {"@clave", claveProducto}
             };
 
-            int filas = Update(consulta, parametros);
+            int filas = Delete(consulta, parametros);
             return filas > 0;
+            
+        // NOTA: Si se desea mantener un registro histórico, considere:
+       // 1. Crear una tabla ProductosDescontinuados
+    // 2. Mover el producto a esa tabla antes de eliminarlo
+     // 3. O agregar un campo ACTIVO a la tabla Producto
         }
 
 

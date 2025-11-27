@@ -43,6 +43,7 @@ namespace proyectoInventario
             this.btnVolver = new System.Windows.Forms.Button();
             this.dgvProductos = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblClaveProducto = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,6 +59,17 @@ namespace proyectoInventario
             this.lblTitleMain.TabIndex = 5;
             this.lblTitleMain.Text = "Descontinuar Producto";
             this.lblTitleMain.Click += new System.EventHandler(this.LblTitleMainClick);
+            // 
+            // lblClaveProducto
+            // 
+            this.lblClaveProducto.AutoSize = true;
+            this.lblClaveProducto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblClaveProducto.ForeColor = System.Drawing.Color.White;
+            this.lblClaveProducto.Location = new System.Drawing.Point(76, 102);
+            this.lblClaveProducto.Name = "lblClaveProducto";
+            this.lblClaveProducto.Size = new System.Drawing.Size(117, 15);
+            this.lblClaveProducto.TabIndex = 16;
+            this.lblClaveProducto.Text = "Clave del Producto:";
             // 
             // btnRegistrarCompra
             // 
@@ -140,6 +152,7 @@ namespace proyectoInventario
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(13)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(1139, 481);
+            this.Controls.Add(this.lblClaveProducto);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.dgvProductos);
             this.Controls.Add(this.btnVolver);
@@ -156,9 +169,10 @@ namespace proyectoInventario
         }
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dgvProductos;
-private System.Windows.Forms.Button btnVolver;
-  private System.Windows.Forms.Button btnRegistrarCompra;
- private System.Windows.Forms.TextBox txtIDProducto;
+        private System.Windows.Forms.Button btnVolver;
+        private System.Windows.Forms.Button btnRegistrarCompra;
+        private System.Windows.Forms.TextBox txtIDProducto;
         private System.Windows.Forms.Label lblTitleMain;
+        private System.Windows.Forms.Label lblClaveProducto;
   }
 }

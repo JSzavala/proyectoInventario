@@ -24,22 +24,24 @@ namespace proyectoInventario.backEnd.Servicios
         }
 
         /// <summary>
-        /// Registra una factura de entrada de inventario con sus detalles usando transacciones
+        /// Registra una venta con sus detalles usando transacciones
+        /// NOTA: En la nueva BD, las ventas se registran en la tabla Venta y DetalleVenta
         /// </summary>
-        /// <param name="factura">Objeto Factura con los datos principales</param>
+        /// <param name="factura">Objeto Factura con los datos principales (se adapta a Venta)</param>
         /// <param name="detalles">Lista de DetalleFactura con los productos</param>
-        /// <returns>ID de la factura generada, o -1 si hubo error</returns>
-        public long RegistrarEntradaInventario(Factura factura, List<DetalleFactura> detalles)
+        /// <param name="idEmpleado">ID del empleado que realiza la venta</param>
+        /// <returns>ID de la venta generada, o -1 si hubo error</returns>
+        public long RegistrarVenta(int idEmpleado, List<DetalleFactura> detalles)
         {
             MySqlTransaction transaction = null;
-            long idFacturaGenerada = -1;
+            long idVentaGenerada = -1;
 
             try
             {
                 // Validar que haya detalles
                 if (detalles == null || detalles.Count == 0)
                 {
-                    throw new Exception("Debe agregar al menos un producto a la factura");
+                    throw new Exception("Debe agregar al menos un producto a la venta");
                 }
 
                 // Abrir conexión
@@ -51,38 +53,40 @@ namespace proyectoInventario.backEnd.Servicios
                 // Iniciar transacción
                 transaction = conexionBd.ObtenerConexion().BeginTransaction();
 
-                // 1. Insertar la factura
-                idFacturaGenerada = InsertarFactura(factura, transaction);
+                // 1. Calcular el total
+                decimal total = CalcularTotalVenta(detalles);
 
-                if (idFacturaGenerada <= 0)
+                // 2. Insertar la venta
+                idVentaGenerada = InsertarVenta(idEmpleado, total, transaction);
+
+                if (idVentaGenerada <= 0)
                 {
-                    throw new Exception("Error al insertar la factura");
+                    throw new Exception("Error al insertar la venta");
                 }
 
-                // 2. Insertar los detalles de la factura
+                // 3. Insertar los detalles de la venta
                 foreach (var detalle in detalles)
                 {
-                    detalle.IdFactura = (int)idFacturaGenerada;
-                    long idDetalle = InsertarDetalleFactura(detalle, transaction);
+                    long idDetalle = InsertarDetalleVenta((int)idVentaGenerada, detalle, transaction);
 
                     if (idDetalle <= 0)
                     {
-                        throw new Exception($"Error al insertar el detalle del producto ID: {detalle.IdProducto}");
+                        throw new Exception($"Error al insertar el detalle del producto: {detalle.IdProducto}");
                     }
 
-                    // 3. Actualizar el stock del producto
-                    bool stockActualizado = ActualizarStockProducto(detalle.IdProducto, detalle.Cantidad, transaction);
+                    // 4. Actualizar el stock del producto (restar cantidad)
+                    bool stockActualizado = ActualizarStockProducto(detalle.IdProducto, -detalle.Cantidad, transaction);
 
                     if (!stockActualizado)
                     {
-                        throw new Exception($"Error al actualizar stock del producto ID: {detalle.IdProducto}");
+                        throw new Exception($"Error al actualizar stock del producto: {detalle.IdProducto}");
                     }
                 }
 
                 // Confirmar transacción
                 transaction.Commit();
 
-                return idFacturaGenerada;
+                return idVentaGenerada;
             }
             catch (MySqlException ex)
             {
@@ -99,8 +103,8 @@ namespace proyectoInventario.backEnd.Servicios
                     }
                 }
 
-                Console.WriteLine("Error en RegistrarEntradaInventario: " + ex.Message);
-                throw new Exception("Error al registrar la entrada de inventario: " + ex.Message, ex);
+                Console.WriteLine("Error en RegistrarVenta: " + ex.Message);
+                throw new Exception("Error al registrar la venta: " + ex.Message, ex);
             }
             catch (Exception ex)
             {
@@ -117,7 +121,7 @@ namespace proyectoInventario.backEnd.Servicios
                     }
                 }
 
-                Console.WriteLine("Error en RegistrarEntradaInventario: " + ex.Message);
+                Console.WriteLine("Error en RegistrarVenta: " + ex.Message);
                 throw;
             }
             finally
@@ -128,63 +132,68 @@ namespace proyectoInventario.backEnd.Servicios
         }
 
         /// <summary>
-        /// Inserta una factura en la base de datos usando clsConsultas
+        /// Inserta una venta en la base de datos
         /// </summary>
-        /// <param name="factura">Objeto Factura a insertar</param>
+        /// <param name="idEmpleado">ID del empleado que realiza la venta</param>
+        /// <param name="total">Total de la venta</param>
         /// <param name="transaction">Transacción activa</param>
-        /// <returns>ID de la factura generada</returns>
-        private long InsertarFactura(Factura factura, MySqlTransaction transaction)
+        /// <returns>ID de la venta generada</returns>
+        private long InsertarVenta(int idEmpleado, decimal total, MySqlTransaction transaction)
         {
-            string consulta = @"INSERT INTO factura (fecha, total, tipoFactura) 
-            VALUES (@fecha, @total, @tipoFactura)";
+            string consulta = @"INSERT INTO Venta (ID_Empleado, Total, Estado) 
+            VALUES (@idEmpleado, @total, 'Pagada')";
             Dictionary<string, object> parametros = new Dictionary<string, object>
             {
-                { "@fecha", factura.Fecha },
-                { "@total", factura.Total },
-                { "@tipoFactura", (int)factura.TipoFactura }
+                { "@idEmpleado", idEmpleado },
+                { "@total", total }
             };
             return consultas.Insert(consulta, parametros, transaction);
         }
 
         /// <summary>
-        /// Inserta un detalle de factura en la base de datos usando clsConsultas
+        /// Inserta un detalle de venta en la base de datos
         /// </summary>
+        /// <param name="idVenta">ID de la venta</param>
         /// <param name="detalle">Objeto DetalleFactura a insertar</param>
         /// <param name="transaction">Transacción activa</param>
         /// <returns>ID del detalle generado</returns>
-        private long InsertarDetalleFactura(DetalleFactura detalle, MySqlTransaction transaction)
+        private long InsertarDetalleVenta(int idVenta, DetalleFactura detalle, MySqlTransaction transaction)
         {
-            string consulta = @"INSERT INTO detalleFactura (cantidad, precioUnitario, idFactura, idProducto) 
-            VALUES (@cantidad, @precioUnitario, @idFactura, @idProducto)";
+            // Calcular subtotal
+            decimal subtotal = detalle.Cantidad * detalle.PrecioUnitario;
+
+            string consulta = @"INSERT INTO DetalleVenta (ID_Venta, CLAVE_Producto, Cantidad, PrecioUnitario, Subtotal) 
+            VALUES (@idVenta, @claveProducto, @cantidad, @precioUnitario, @subtotal)";
 
             Dictionary<string, object> parametros = new Dictionary<string, object>
             {
+                { "@idVenta", idVenta },
+                { "@claveProducto", detalle.IdProducto }, // NOTA: IdProducto ahora contiene la CLAVE
                 { "@cantidad", detalle.Cantidad },
                 { "@precioUnitario", detalle.PrecioUnitario },
-                { "@idFactura", detalle.IdFactura },
-                { "@idProducto", detalle.IdProducto }
+                { "@subtotal", subtotal }
             };
 
             return consultas.Insert(consulta, parametros, transaction);
         }
 
         /// <summary>
-        /// Actualiza el stock de un producto sumando la cantidad recibida
+        /// Actualiza el stock de un producto
         /// </summary>
-        /// <param name="idProducto">ID del producto</param>
-        /// <param name="cantidad">Cantidad a sumar al stock</param>
+        /// <param name="claveProducto">CLAVE del producto</param>
+        /// <param name="cantidad">Cantidad a sumar/restar al stock (positivo para compras, negativo para ventas)</param>
         /// <param name="transaction">Transacción activa</param>
         /// <returns>True si se actualizó correctamente</returns>
-        private bool ActualizarStockProducto(int idProducto, short cantidad, MySqlTransaction transaction)
+        private bool ActualizarStockProducto(int claveProducto, int cantidad, MySqlTransaction transaction)
         {
-            string consulta = @"UPDATE producto 
-            SET stockActual = stockActual + @cantidad 
-            WHERE idProducto = @idProducto";
+            string consulta = @"UPDATE Producto 
+            SET STOCK = STOCK + @cantidad 
+            WHERE CLAVE = @clave";
 
             using (MySqlCommand comando = new MySqlCommand(consulta, conexionBd.ObtenerConexion(), transaction))
             {
                 comando.Parameters.AddWithValue("@cantidad", cantidad);
-                comando.Parameters.AddWithValue("@idProducto", idProducto);
+                comando.Parameters.AddWithValue("@clave", claveProducto.ToString());
 
                 int filasAfectadas = comando.ExecuteNonQuery();
                 return filasAfectadas > 0;
@@ -192,11 +201,11 @@ namespace proyectoInventario.backEnd.Servicios
         }
 
         /// <summary>
-        /// Calcula el total de la factura basándose en los detalles
+        /// Calcula el total de la venta basándose en los detalles
         /// </summary>
-        /// <param name="detalles">Lista de detalles de factura</param>
+        /// <param name="detalles">Lista de detalles de venta</param>
         /// <returns>Total calculado</returns>
-        public decimal CalcularTotalFactura(List<DetalleFactura> detalles)
+        public decimal CalcularTotalVenta(List<DetalleFactura> detalles)
         {
             decimal total = 0;
 
@@ -211,26 +220,15 @@ namespace proyectoInventario.backEnd.Servicios
         }
 
         /// <summary>
-        /// Valida los datos de una entrada de inventario antes de registrarla
+        /// Valida los datos de una venta antes de registrarla
         /// </summary>
-        /// <param name="factura">Factura a validar</param>
         /// <param name="detalles">Detalles a validar</param>
         /// <returns>Mensaje de error o cadena vacía si todo está correcto</returns>
-        public string ValidarEntradaInventario(Factura factura, List<DetalleFactura> detalles)
+        public string ValidarVenta(List<DetalleFactura> detalles)
         {
-            if (factura == null)
-            {
-                return "La factura no puede ser nula";
-            }
-
-            if (factura.Fecha > DateTime.Now)
-            {
-                return "La fecha de la factura no puede ser futura";
-            }
-
             if (detalles == null || detalles.Count == 0)
             {
-                return "Debe agregar al menos un producto a la factura";
+                return "Debe agregar al menos un producto a la venta";
             }
 
             foreach (var detalle in detalles)
@@ -245,7 +243,7 @@ namespace proyectoInventario.backEnd.Servicios
                     return "El precio unitario debe ser mayor a cero";
                 }
 
-                if (detalle.IdProducto <= 0)
+                if (string.IsNullOrEmpty(detalle.IdProducto.ToString()))
                 {
                     return "Debe seleccionar un producto válido";
                 }

@@ -117,54 +117,54 @@ txtPrecioVenta.Focus();
     string nombreProducto = txtIDProducto.Text.Trim();
       
     // Buscar el producto en la base de datos por nombre
-    string consulta = @"SELECT IdProducto, Nombre, PrecioCompra, PrecioVenta, StockActual, Descontinuado 
+string consulta = @"SELECT CLAVE, NOMBRE, DESCRIPCION, PRECIO, STOCK 
   FROM Producto 
-  WHERE Nombre LIKE @nombre AND Descontinuado = 0";
+  WHERE NOMBRE LIKE @nombre";
     
-      var parametros = new Dictionary<string, object>
+  var parametros = new Dictionary<string, object>
             {
-             { "@nombre", "%" + nombreProducto + "%" }
-                };
+      { "@nombre", "%" + nombreProducto + "%" }
+       };
       
          DataTable resultado = consultas.Select(consulta, parametros);
-  
+
          // Verificar si se encontró el producto
            if (resultado.Rows.Count == 0)
-          {
-          MessageBox.Show($"No se encontró ningún producto activo con el nombre '{nombreProducto}'.", 
+       {
+          MessageBox.Show($"No se encontró ningún producto con el nombre '{nombreProducto}'.", 
   "Producto no encontrado", MessageBoxButtons.OK, MessageBoxIcon.Information);
           return;
       }
-    
+  
           if (resultado.Rows.Count > 1)
-    {
+ {
       MessageBox.Show("Se encontraron múltiples productos con ese nombre. Por favor, sea más específico.", 
             "Múltiples resultados", MessageBoxButtons.OK, MessageBoxIcon.Information);
-              return;
+       return;
      }
    
    // Obtener los datos del producto
     DataRow producto = resultado.Rows[0];
-             int idProducto = Convert.ToInt32(producto["IdProducto"]);
-           string nombre = producto["Nombre"].ToString();
+  string claveProducto = producto["CLAVE"].ToString();
+           string nombre = producto["NOMBRE"].ToString();
        
       // Verificar si el producto ya está en el DataGridView
     foreach (DataRow row in dtProductosCompra.Rows)
       {
-if (Convert.ToInt32(row["IdProducto"]) == idProducto)
-          {
-              MessageBox.Show("Este producto ya ha sido agregado a la compra.", 
+if (row["IdProducto"].ToString() == claveProducto)
+   {
+         MessageBox.Show("Este producto ya ha sido agregado a la compra.", 
      "Producto duplicado", MessageBoxButtons.OK, MessageBoxIcon.Warning);
      return;
         }
       }
-                
+    
      // Calcular el subtotal
     decimal subtotal = cantidad * precioVenta;
-        
-         // Agregar el producto al DataTable
-                DataRow nuevaFila = dtProductosCompra.NewRow();
-   nuevaFila["IdProducto"] = idProducto;
+ 
+ // Agregar el producto al DataTable
+ DataRow nuevaFila = dtProductosCompra.NewRow();
+   nuevaFila["IdProducto"] = claveProducto;
     nuevaFila["Nombre"] = nombre;
     nuevaFila["Cantidad"] = cantidad;
        nuevaFila["PrecioVenta"] = precioVenta;

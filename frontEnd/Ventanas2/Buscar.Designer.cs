@@ -35,7 +35,7 @@ namespace proyectoInventario
         /// not be able to load this method if it was changed manually.
         /// </summary>
         private void InitializeComponent()
-  {
+        {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Buscar));
    this.lblTitleMain = new System.Windows.Forms.Label();
@@ -44,6 +44,7 @@ namespace proyectoInventario
    this.dgvProductos = new System.Windows.Forms.DataGridView();
             this.btnVolver = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.lblNombreProducto = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
         this.SuspendLayout();
       // 
@@ -58,9 +59,20 @@ namespace proyectoInventario
         this.lblTitleMain.TabIndex = 5;
             this.lblTitleMain.Text = "Buscar Producto";
             // 
+        // lblNombreProducto
+    // 
+            this.lblNombreProducto.AutoSize = true;
+            this.lblNombreProducto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+    this.lblNombreProducto.ForeColor = System.Drawing.Color.White;
+    this.lblNombreProducto.Location = new System.Drawing.Point(54, 90);
+    this.lblNombreProducto.Name = "lblNombreProducto";
+    this.lblNombreProducto.Size = new System.Drawing.Size(181, 15);
+    this.lblNombreProducto.TabIndex = 17;
+ this.lblNombreProducto.Text = "Nombre o Clave del Producto:";
+    // 
         // txtIDProducto
       // 
-            this.txtIDProducto.Location = new System.Drawing.Point(54, 103);
+            this.txtIDProducto.Location = new System.Drawing.Point(54, 108);
       this.txtIDProducto.Name = "txtIDProducto";
             this.txtIDProducto.Size = new System.Drawing.Size(155, 20);
        this.txtIDProducto.TabIndex = 6;
@@ -72,7 +84,7 @@ namespace proyectoInventario
  this.btnBuscar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
       this.btnBuscar.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
        this.btnBuscar.ForeColor = System.Drawing.Color.White;
-        this.btnBuscar.Location = new System.Drawing.Point(236, 98);
+        this.btnBuscar.Location = new System.Drawing.Point(236, 103);
 this.btnBuscar.Name = "btnBuscar";
         this.btnBuscar.Size = new System.Drawing.Size(67, 27);
          this.btnBuscar.TabIndex = 10;
@@ -132,8 +144,9 @@ this.btnVolver.Click += new System.EventHandler(this.BtnVolver_Click);
        this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(13)))), ((int)(((byte)(32)))));
       this.ClientSize = new System.Drawing.Size(854, 391);
-            this.Controls.Add(this.label1);
-   this.Controls.Add(this.btnVolver);
+            this.Controls.Add(this.lblNombreProducto);
+   this.Controls.Add(this.label1);
+            this.Controls.Add(this.btnVolver);
             this.Controls.Add(this.dgvProductos);
             this.Controls.Add(this.btnBuscar);
             this.Controls.Add(this.txtIDProducto);
@@ -151,5 +164,6 @@ this.PerformLayout();
         private System.Windows.Forms.Button btnBuscar;
 private System.Windows.Forms.TextBox txtIDProducto;
         private System.Windows.Forms.Label lblTitleMain;
+private System.Windows.Forms.Label lblNombreProducto;
 }
 }

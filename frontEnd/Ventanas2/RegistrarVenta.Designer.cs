@@ -42,6 +42,8 @@ namespace proyectoInventario
 			this.txtCantidad = new System.Windows.Forms.TextBox();
 			this.btnRegistrarVenta = new System.Windows.Forms.Button();
 			this.btnVolver = new System.Windows.Forms.Button();
+			this.lblClaveProducto = new System.Windows.Forms.Label();
+			this.lblCantidad = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// lblTitleMain
@@ -55,6 +57,17 @@ namespace proyectoInventario
 			this.lblTitleMain.TabIndex = 5;
 			this.lblTitleMain.Text = "Registrar Venta";
 			// 
+			// lblClaveProducto
+			// 
+			this.lblClaveProducto.AutoSize = true;
+			this.lblClaveProducto.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblClaveProducto.ForeColor = System.Drawing.Color.White;
+			this.lblClaveProducto.Location = new System.Drawing.Point(48, 86);
+			this.lblClaveProducto.Name = "lblClaveProducto";
+			this.lblClaveProducto.Size = new System.Drawing.Size(117, 15);
+			this.lblClaveProducto.TabIndex = 12;
+			this.lblClaveProducto.Text = "Clave del Producto:";
+			// 
 			// txtIDProducto
 			// 
 			this.txtIDProducto.Location = new System.Drawing.Point(48, 104);
@@ -62,9 +75,20 @@ namespace proyectoInventario
 			this.txtIDProducto.Size = new System.Drawing.Size(280, 20);
 			this.txtIDProducto.TabIndex = 6;
 			// 
+			// lblCantidad
+			// 
+			this.lblCantidad.AutoSize = true;
+			this.lblCantidad.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.lblCantidad.ForeColor = System.Drawing.Color.White;
+			this.lblCantidad.Location = new System.Drawing.Point(48, 127);
+			this.lblCantidad.Name = "lblCantidad";
+			this.lblCantidad.Size = new System.Drawing.Size(58, 15);
+			this.lblCantidad.TabIndex = 13;
+			this.lblCantidad.Text = "Cantidad:";
+			// 
 			// txtCantidad
 			// 
-			this.txtCantidad.Location = new System.Drawing.Point(48, 142);
+			this.txtCantidad.Location = new System.Drawing.Point(48, 145);
 			this.txtCantidad.Name = "txtCantidad";
 			this.txtCantidad.Size = new System.Drawing.Size(280, 20);
 			this.txtCantidad.TabIndex = 7;
@@ -76,7 +100,7 @@ namespace proyectoInventario
 			this.btnRegistrarVenta.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnRegistrarVenta.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnRegistrarVenta.ForeColor = System.Drawing.Color.White;
-			this.btnRegistrarVenta.Location = new System.Drawing.Point(113, 210);
+			this.btnRegistrarVenta.Location = new System.Drawing.Point(113, 195);
 			this.btnRegistrarVenta.Name = "btnRegistrarVenta";
 			this.btnRegistrarVenta.Size = new System.Drawing.Size(155, 38);
 			this.btnRegistrarVenta.TabIndex = 10;
@@ -103,7 +127,9 @@ namespace proyectoInventario
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(13)))), ((int)(((byte)(32)))));
-			this.ClientSize = new System.Drawing.Size(375, 368);
+			this.ClientSize = new System.Drawing.Size(375, 280);
+			this.Controls.Add(this.lblCantidad);
+			this.Controls.Add(this.lblClaveProducto);
 			this.Controls.Add(this.btnVolver);
 			this.Controls.Add(this.btnRegistrarVenta);
 			this.Controls.Add(this.txtCantidad);
@@ -121,5 +147,7 @@ namespace proyectoInventario
 		private System.Windows.Forms.TextBox txtCantidad;
 		private System.Windows.Forms.TextBox txtIDProducto;
 		private System.Windows.Forms.Label lblTitleMain;
+		private System.Windows.Forms.Label lblClaveProducto;
+		private System.Windows.Forms.Label lblCantidad;
 	}
 }
