@@ -21,9 +21,10 @@ namespace proyectoInventario
     {
   public Descontinuar()
         {
-          //
-         // The InitializeComponent() call is required for Windows Forms designer support.
             //
+            // The InitializeComponent() call is required for Windows Forms designer support.
+            //
+            CargarProductos()
             InitializeComponent();
     //
     // TODO: Add constructor code after the InitializeComponent() call.
@@ -41,7 +42,12 @@ namespace proyectoInventario
         {
             // Evento del label (sin funcionalidad específica)
         }
-
+        private void CargarProductos()
+        {
+            clsConsultas consultas = new clsConsultas();
+            DataTable productos = consultas.Select("SELECT IdProducto, Nombre, StockActual, Descontinuado FROM Producto WHERE Descontinuado = 0");
+            dgvProductos.DataSource = productos;
+        }
         private void btnRegistrarCompra_Click(object sender, EventArgs e)
         {
             if (int.TryParse(txtIDProducto.Text, out int idProducto))

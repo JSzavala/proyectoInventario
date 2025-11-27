@@ -57,12 +57,12 @@ namespace proyectoInventario
                 // Abrir menú principal según rol
                 if (usuarioAutenticado.Rol == RolUsuario.Dueña)
                 {
-                    RegistrarVenta adminForm = new RegistrarVenta(RolUsuario.Dueña);
+                    Main adminForm = new Main();
                     adminForm.Show();
                 }
                 else
                 {
-                    RegistrarVenta vendedorForm = new RegistrarVenta(RolUsuario.Empleado);
+                    Main vendedorForm = new Main();
                     vendedorForm.Show();
                 }
 
