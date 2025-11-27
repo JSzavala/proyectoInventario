@@ -78,7 +78,7 @@ namespace proyectoInventario
             // txtIDProducto
             // 
             this.txtIDProducto.Location = new System.Drawing.Point(76, 123);
-            this.txtIDProducto.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtIDProducto.Margin = new System.Windows.Forms.Padding(4);
             this.txtIDProducto.Name = "txtIDProducto";
             this.txtIDProducto.Size = new System.Drawing.Size(205, 22);
             this.txtIDProducto.TabIndex = 11;
