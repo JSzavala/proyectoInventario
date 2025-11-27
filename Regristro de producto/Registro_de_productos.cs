@@ -16,9 +16,6 @@ namespace proyectoInventario
             CargarProductos();
         }
 
-        // ==========================================
-        //           OBTENER PRODUCTOS
-        // ==========================================
         public List<Producto> ObtenerProductos()
         {
             List<Producto> lista = new List<Producto>();
@@ -46,17 +43,11 @@ namespace proyectoInventario
             return lista;
         }
 
-        // ==========================================
-        //           CARGAR DATOS AL GRID
-        // ==========================================
         public void CargarProductos()
         {
             dgvProductos.DataSource = ObtenerProductos();
         }
 
-        // ==========================================
-        //           BOTÓN VOLVER
-        // ==========================================
         private void BtnVolver_Click(object sender, EventArgs e)
         {
             Main ventanaPrincipal = new Main();  // Nombre correcto tu ventana inicial
@@ -64,9 +55,6 @@ namespace proyectoInventario
             this.Close();
         }
 
-        // ==========================================
-        //         AGREGAR PRODUCTO NUEVO
-        // ==========================================
         private void btnAgregarInv_Click(object sender, EventArgs e)
         {
             string id = txtIDProducto.Text;
@@ -136,9 +124,6 @@ namespace proyectoInventario
         }
     }
 
-    // ==========================================
-    //              CLASE PRODUCTO
-    // ==========================================
     public class Producto
     {
         public string Clave { get; set; }
@@ -147,3 +132,4 @@ namespace proyectoInventario
         public int Stock { get; set; }
     }
 }
+
