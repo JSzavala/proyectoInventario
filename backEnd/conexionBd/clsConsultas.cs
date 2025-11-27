@@ -1,10 +1,11 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using proyectoInventario.backEnd.POCOS;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
 
 namespace proyectoInventario.backEnd.conexionBd
 {
@@ -253,5 +254,50 @@ namespace proyectoInventario.backEnd.conexionBd
 
             return filasEliminadas;
         }
+        
+        // tomando en cuenta que tenos en la bd lo tipos de usirios
+        // los utotentificamos si existe de que tipo es y sin envimos un mensaje de error
+        public Usuario AutenticarUsuario(string nombreUsuario, string contrasena)
+        {
+            string consulta = "CALL sp_AutenticarUsuario(@p_NombreUsuario, @p_Contrasena)";
+            var parametros = new Dictionary<string, object>
+            {
+                {"@p_NombreUsuario", nombreUsuario},
+                {"@p_Contrasena", contrasena}
+            };
+
+            DataTable resultado = Select(consulta, parametros);
+
+            if (resultado.Rows.Count > 0)
+            {
+                DataRow fila = resultado.Rows[0];
+                return new Usuario(
+                    Convert.ToInt32(fila["ID_Usuario"]),
+                    fila["NombreUsuario"].ToString(),
+                    nombreUsuario,
+                    contrasena,
+                    fila["NombreTipo"].ToString() == "Administrador" ? RolUsuario.Dueña : RolUsuario.Empleado,
+                    true
+                );
+            }
+
+            return null; // si no encontró usuario
+        }
+
+        // se realisa la actualizacion en el producto en el atributo Descontinuado
+        // Combirtiendolo a true o en bynario 1
+        public bool DescontinuarProducto(int idProducto)
+        {
+            string consulta = "UPDATE Producto SET Descontinuado = 1 WHERE IdProducto = @idProducto";
+            var parametros = new Dictionary<string, object>
+            {
+                {"@idProducto", idProducto}
+            };
+
+            int filas = Update(consulta, parametros);
+            return filas > 0;
+        }
+
+
     }
 }

@@ -25,17 +25,19 @@ namespace proyectoInventario.backEnd.POCOS
         public string UsuarioNombre { get; set; }
         public string Contrasena { get; set; }
         public RolUsuario Rol { get; set; }
+        public bool Activo { get; set; }
 
         /// <summary>
         /// Constructor con parámetros
         /// </summary>
-        public Usuario(int idUsuario, string nombre, string usuarioNombre, string contrasena, RolUsuario rol)
+        public Usuario(int idUsuario, string nombre, string usuarioNombre, string contrasena, RolUsuario rol, bool activo)
         {
             IdUsuario = idUsuario;
             Nombre = nombre;
             UsuarioNombre = usuarioNombre;
             Contrasena = contrasena;
-            Rol = rol;
+            Rol = rol; 
+            Activo = activo;
         }
     }
 }
