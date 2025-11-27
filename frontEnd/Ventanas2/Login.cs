@@ -57,6 +57,7 @@ namespace proyectoInventario
                 // Abrir menú principal según rol
                 if (usuarioAutenticado.Rol == RolUsuario.Dueña)
                 {
+
                     Main adminForm = new Main();
                     adminForm.Show();
                 }
