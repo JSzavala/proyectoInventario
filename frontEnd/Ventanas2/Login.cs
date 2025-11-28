@@ -21,15 +21,8 @@ namespace proyectoInventario
     {
         public Login()
         {
-      //
-            // The InitializeComponent() call is required for Windows Forms designer support.
-            //
         InitializeComponent();
-    
-      //
- // TODO: Add constructor code after the InitializeComponent() call.
-         //
-      }
+        }
     
         void LblTitleLoginClick(object sender, EventArgs e)
         {
@@ -53,7 +46,8 @@ namespace proyectoInventario
             if (usuarioAutenticado != null)
             {
                 MessageBox.Show($"Bienvenido {usuarioAutenticado.Nombre} ({usuarioAutenticado.Rol})", "Acceso concedido");
-
+                    
+                globales.clsGlobales.RolActual = usuarioAutenticado.Rol.ToString();
                 // Abrir menú principal según rol
                 if (usuarioAutenticado.Rol == RolUsuario.Dueña)
                 {
