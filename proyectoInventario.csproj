@@ -184,6 +184,9 @@
     <EmbeddedResource Include="frontEnd\Ventanas2\RegistrarCompra.resx">
       <DependentUpon>RegistrarCompra.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="frontEnd\Ventanas2\RegistrarVenta.resx">
+      <DependentUpon>RegistrarVenta.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
