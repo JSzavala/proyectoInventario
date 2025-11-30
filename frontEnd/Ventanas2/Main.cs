@@ -7,6 +7,7 @@
  * To change this template use Tools | Options | Coding | Edit Standard Headers.
  */
 using proyectoInventario.backEnd.POCOS;
+using proyectoInventario.frontEnd.Ventanas2;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -104,5 +105,12 @@ this.Hide();
        // Redirigir al método correcto
        BtnBuscar_Click(sender, e);
     }
+
+        private void btnEstadisticas_Click(object sender, EventArgs e)
+        {
+            Estadisticas frmEstadisticas = new Estadisticas();
+            frmEstadisticas.Show();
+            this.Hide();
+        }
     }
 }

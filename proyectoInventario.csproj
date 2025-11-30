@@ -116,6 +116,12 @@
     <Compile Include="backEnd\POCOS\Proveedor.cs" />
     <Compile Include="backEnd\POCOS\Usuario.cs" />
     <Compile Include="backEnd\Servicios\srvRegistrarMovimientoInventario.cs" />
+    <Compile Include="frontEnd\Ventanas2\Estadisticas.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frontEnd\Ventanas2\Estadisticas.Designer.cs">
+      <DependentUpon>Estadisticas.cs</DependentUpon>
+    </Compile>
     <Compile Include="globales\clsGlobales.cs" />
     <Compile Include="frontEnd\frmMain.cs">
       <SubType>Form</SubType>
@@ -175,6 +181,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="frontEnd\Ventanas2\Descontinuar.resx">
       <DependentUpon>Descontinuar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frontEnd\Ventanas2\Estadisticas.resx">
+      <DependentUpon>Estadisticas.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frontEnd\Ventanas2\Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

@@ -47,6 +47,7 @@ if (disposing) {
             this.dgvProductos = new System.Windows.Forms.DataGridView();
             this.btnRegistrarUsuarios = new System.Windows.Forms.Button();
             this.btnRegistrarVenta = new System.Windows.Forms.Button();
+            this.btnEstadisticas = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvProductos)).BeginInit();
             this.SuspendLayout();
             // 
@@ -192,12 +193,27 @@ if (disposing) {
             this.btnRegistrarVenta.UseVisualStyleBackColor = false;
             this.btnRegistrarVenta.Click += new System.EventHandler(this.BtnRegistrarVenta_Click);
             // 
+            // btnEstadisticas
+            // 
+            this.btnEstadisticas.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(80)))), ((int)(((byte)(75)))), ((int)(((byte)(255)))));
+            this.btnEstadisticas.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnEstadisticas.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnEstadisticas.ForeColor = System.Drawing.Color.White;
+            this.btnEstadisticas.Location = new System.Drawing.Point(592, 68);
+            this.btnEstadisticas.Name = "btnEstadisticas";
+            this.btnEstadisticas.Size = new System.Drawing.Size(106, 25);
+            this.btnEstadisticas.TabIndex = 13;
+            this.btnEstadisticas.Text = "Estadisticas";
+            this.btnEstadisticas.UseVisualStyleBackColor = false;
+            this.btnEstadisticas.Click += new System.EventHandler(this.btnEstadisticas_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(8)))), ((int)(((byte)(13)))), ((int)(((byte)(32)))));
             this.ClientSize = new System.Drawing.Size(854, 409);
+            this.Controls.Add(this.btnEstadisticas);
             this.Controls.Add(this.btnRegistrarVenta);
             this.Controls.Add(this.btnRegistrarUsuarios);
             this.Controls.Add(this.dgvProductos);
@@ -225,5 +241,6 @@ if (disposing) {
  private System.Windows.Forms.Button btnRegistrarProducto;
         private System.Windows.Forms.Label lblTitleMain;
         private System.Windows.Forms.Button btnRegistrarVenta;
+        private System.Windows.Forms.Button btnEstadisticas;
     }
 }

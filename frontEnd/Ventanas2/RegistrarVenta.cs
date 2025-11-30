@@ -33,8 +33,9 @@ namespace proyectoInventario
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
 		}
-		
-		private void BtnVolver_Click(object sender, EventArgs e)
+
+
+        private void BtnVolver_Click(object sender, EventArgs e)
 		{
 			Main frmMain = new Main();
 			frmMain.Show();
@@ -48,6 +49,7 @@ namespace proyectoInventario
 
         private void btnCalcularPrecio_Click(object sender, EventArgs e)
         {
+           
             if (string.IsNullOrWhiteSpace(txtIDProducto.Text))
             {
                 MessageBox.Show("Ingrese la clave del producto.");
@@ -145,59 +147,121 @@ namespace proyectoInventario
         private void btnRegistrarVenta_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtIDProducto.Text) ||
-            string.IsNullOrWhiteSpace(txtCantidad.Text) ||
-            string.IsNullOrWhiteSpace(txtTotal.Text))
+                string.IsNullOrWhiteSpace(txtCantidad.Text) ||
+                string.IsNullOrWhiteSpace(txtTotal.Text))
             {
                 MessageBox.Show("Complete todos los campos.");
                 return;
             }
 
-            int cantidad = int.Parse(txtCantidad.Text);
-            decimal total = decimal.Parse(txtTotal.Text);
+            if (!int.TryParse(txtCantidad.Text, out int cantidad))
+            {
+                MessageBox.Show("La cantidad no es válida.");
+                return;
+            }
+
+            if (!decimal.TryParse(txtTotal.Text, out decimal total))
+            {
+                MessageBox.Show("El total no es válido.");
+                return;
+            }
 
             using (MySqlConnection cn = new MySqlConnection(connectionString))
             {
                 cn.Open();
-                MySqlTransaction trans = cn.BeginTransaction();
-
-                try
+                using (MySqlTransaction trans = cn.BeginTransaction())
                 {
-                    // 1. Insertar Venta
-                    string insertVenta = "INSERT INTO Venta (ID_Empleado, Total, Estado) VALUES (1, @total, 'Pagada')";
-                    MySqlCommand cmdVenta = new MySqlCommand(insertVenta, cn, trans);
-                    cmdVenta.Parameters.AddWithValue("@total", total);
-                    cmdVenta.ExecuteNonQuery();
+                    try
+                    {
+                        // --- 0) Verificar stock disponible (con bloqueo FOR UPDATE) ---
+                        string sqlStock = "SELECT STOCK FROM Producto WHERE CLAVE = @clave FOR UPDATE";
+                        using (MySqlCommand cmdStock = new MySqlCommand(sqlStock, cn, trans))
+                        {
+                            cmdStock.Parameters.AddWithValue("@clave", txtIDProducto.Text);
+                            object stockObj = cmdStock.ExecuteScalar();
 
-                    long idVenta = cmdVenta.LastInsertedId;
+                            if (stockObj == null)
+                            {
+                                // Producto no existe
+                                MessageBox.Show("El producto no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                trans.Rollback();
+                                return;
+                            }
 
-                    // 2. Obtener precio unitario del producto
-                    string getPrecio = "SELECT PRECIO FROM Producto WHERE CLAVE = @clave";
-                    MySqlCommand cmdPrecio = new MySqlCommand(getPrecio, cn, trans);
-                    cmdPrecio.Parameters.AddWithValue("@clave", txtIDProducto.Text);
-                    decimal precioUnitario = Convert.ToDecimal(cmdPrecio.ExecuteScalar());
+                            int stockActual = Convert.ToInt32(stockObj);
 
-                    // 3. Insertar DetalleVenta
-                    string insertDetalle =
-                        "INSERT INTO DetalleVenta (ID_Venta, CLAVE_Producto, Cantidad, PrecioUnitario, Subtotal) " +
-                        "VALUES (@idv, @prod, @cant, @precio, @sub)";
-                    MySqlCommand cmdDet = new MySqlCommand(insertDetalle, cn, trans);
-                    cmdDet.Parameters.AddWithValue("@idv", idVenta);
-                    cmdDet.Parameters.AddWithValue("@prod", txtIDProducto.Text);
-                    cmdDet.Parameters.AddWithValue("@cant", cantidad);
-                    cmdDet.Parameters.AddWithValue("@precio", precioUnitario);
-                    cmdDet.Parameters.AddWithValue("@sub", precioUnitario * cantidad);
-                    cmdDet.ExecuteNonQuery();
+                            if (cantidad > stockActual)
+                            {
+                                // Stock insuficiente -> mostrar mensaje y cancelar
+                                MessageBox.Show($"Stock insuficiente. Stock actual: {stockActual}", "Stock insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                trans.Rollback();
+                                return;
+                            }
+                        }
 
-                    trans.Commit();
+                        // --- 1) Insertar Venta ---
+                        string insertVenta = "INSERT INTO Venta (ID_Empleado, Total, Estado) VALUES (1, @total, 'Pagada')";
+                        using (MySqlCommand cmdVenta = new MySqlCommand(insertVenta, cn, trans))
+                        {
+                            cmdVenta.Parameters.AddWithValue("@total", total);
+                            cmdVenta.ExecuteNonQuery();
 
-                    MessageBox.Show("Venta registrada correctamente.");
-                }
-                catch (Exception ex)
-                {
-                    trans.Rollback();
-                    MessageBox.Show("Error: " + ex.Message);
-                }
-            }
+                            long idVenta = cmdVenta.LastInsertedId;
+
+                            // --- 2) Obtener precio unitario del producto (ya dentro de la transacción) ---
+                            string getPrecio = "SELECT PRECIO FROM Producto WHERE CLAVE = @clave";
+                            using (MySqlCommand cmdPrecio = new MySqlCommand(getPrecio, cn, trans))
+                            {
+                                cmdPrecio.Parameters.AddWithValue("@clave", txtIDProducto.Text);
+                                object precioObj = cmdPrecio.ExecuteScalar();
+                                if (precioObj == null)
+                                {
+                                    throw new Exception("No se pudo obtener el precio del producto.");
+                                }
+                                decimal precioUnitario = Convert.ToDecimal(precioObj);
+
+                                // --- 3) Insertar DetalleVenta ---
+                                string insertDetalle =
+                                    "INSERT INTO DetalleVenta (ID_Venta, CLAVE_Producto, Cantidad, PrecioUnitario, Subtotal) " +
+                                    "VALUES (@idv, @prod, @cant, @precio, @sub)";
+                                using (MySqlCommand cmdDet = new MySqlCommand(insertDetalle, cn, trans))
+                                {
+                                    cmdDet.Parameters.AddWithValue("@idv", idVenta);
+                                    cmdDet.Parameters.AddWithValue("@prod", txtIDProducto.Text);
+                                    cmdDet.Parameters.AddWithValue("@cant", cantidad);
+                                    cmdDet.Parameters.AddWithValue("@precio", precioUnitario);
+                                    cmdDet.Parameters.AddWithValue("@sub", precioUnitario * cantidad);
+                                    cmdDet.ExecuteNonQuery();
+                                }
+
+                                // --- 4) Actualizar stock (restar la cantidad vendida) ---
+                                string updateStock = "UPDATE Producto SET STOCK = STOCK - @cant WHERE CLAVE = @prod";
+                                using (MySqlCommand cmdUpd = new MySqlCommand(updateStock, cn, trans))
+                                {
+                                    cmdUpd.Parameters.AddWithValue("@cant", cantidad);
+                                    cmdUpd.Parameters.AddWithValue("@prod", txtIDProducto.Text);
+                                    cmdUpd.ExecuteNonQuery();
+                                }
+                            }
+                        }
+
+                        // --- 5) Commit si todo salió bien ---
+                        trans.Commit();
+                        MessageBox.Show("Venta registrada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Limpiar campos opcionalmente
+                        txtIDProducto.Clear();
+                        txtCantidad.Clear();
+                        txtDescuento.Clear();
+                        txtTotal.Clear();
+                    }
+                    catch (Exception ex)
+                    {
+                        try { trans.Rollback(); } catch { /* ignorar rollback */ }
+                        MessageBox.Show("Error al registrar la venta: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                } // using transaction
+            } // using connection
         }
     }
 }
