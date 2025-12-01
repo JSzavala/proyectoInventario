@@ -64,15 +64,15 @@ namespace proyectoInventario
         private void CargarProductos()
   {
             try
-     {
-      string consulta = "SELECT CLAVE, NOMBRE, DESCRIPCION, PRECIO, STOCK FROM Producto ORDER BY CLAVE";
-          DataTable productos = consultas.Select(consulta);
+  {
+      string consulta = "SELECT CLAVE, NOMBRE, DESCRIPCION, PRECIO, STOCK FROM Producto WHERE DESCONTINUADO = false ORDER BY CLAVE";
+ DataTable productos = consultas.Select(consulta);
       dgvProductos.DataSource = productos;
         
          // Renombrar encabezados de columnas para mejor presentación
-        if (dgvProductos.Columns.Count > 0)
+if (dgvProductos.Columns.Count > 0)
             {
-          dgvProductos.Columns["CLAVE"].HeaderText = "Clave";
+dgvProductos.Columns["CLAVE"].HeaderText = "Clave";
        dgvProductos.Columns["NOMBRE"].HeaderText = "Nombre";
       dgvProductos.Columns["DESCRIPCION"].HeaderText = "Descripción";
      dgvProductos.Columns["PRECIO"].HeaderText = "Precio";
@@ -81,11 +81,11 @@ namespace proyectoInventario
    // Formatear columna de precio
 dgvProductos.Columns["PRECIO"].DefaultCellStyle.Format = "C2";
        }
-            }
+         }
        catch (Exception ex)
-            {
-          MessageBox.Show($"Error al cargar productos: {ex.Message}", 
-        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+     {
+      MessageBox.Show($"Error al cargar productos: {ex.Message}", 
+  "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
          }
         }
 
@@ -206,28 +206,28 @@ MessageBox.Show($"Ya existe un producto con la clave '{clave}'. Por favor, use o
         private bool VerificarClaveExistente(string clave)
         {
           try
-            {
-                string consulta = "SELECT COUNT(*) as Total FROM Producto WHERE CLAVE = @clave";
-          var parametros = new Dictionary<string, object>
+{
+    string consulta = "SELECT COUNT(*) as Total FROM Producto WHERE CLAVE = @clave AND DESCONTINUADO = false";
+        var parametros = new Dictionary<string, object>
   {
-       { "@clave", clave }
-       };
+ { "@clave", clave }
+   };
 
-         DataTable resultado = consultas.Select(consulta, parametros);
+  DataTable resultado = consultas.Select(consulta, parametros);
    
          if (resultado.Rows.Count > 0)
    {
          int total = Convert.ToInt32(resultado.Rows[0]["Total"]);
-         return total > 0;
+  return total > 0;
     }
-       
+     
        return false;
-     }
+}
         catch (Exception)
     {
     // En caso de error, asumir que no existe
-                return false;
-            }
+       return false;
+ }
   }
 
         /// <summary>

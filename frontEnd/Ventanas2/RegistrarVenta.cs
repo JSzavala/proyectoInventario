@@ -20,7 +20,7 @@ namespace proyectoInventario
 	/// </summary>
 	public partial class RegistrarVenta : Form
 	{
-        private string connectionString = "Server=localhost;Database=VENTAS;Uid=root;Pwd=pum@s941;";
+        private string connectionString = "Server=localhost;Database=VENTAS;Uid=root;Pwd=1234;";
 
         public RegistrarVenta(RolUsuario rolUsuario)
 		{
@@ -79,7 +79,7 @@ namespace proyectoInventario
             {
                 cn.Open();
 
-                string query = "SELECT PRECIO FROM Producto WHERE CLAVE = @clave";
+                string query = "SELECT PRECIO FROM Producto WHERE CLAVE = @clave AND DESCONTINUADO = false";
                 MySqlCommand cmd = new MySqlCommand(query, cn);
                 cmd.Parameters.AddWithValue("@clave", txtIDProducto.Text);
 
@@ -87,7 +87,7 @@ namespace proyectoInventario
 
                 if (result == null)
                 {
-                    MessageBox.Show("El producto no existe.");
+                    MessageBox.Show("El producto no existe o está descontinuado.");
                     return;
                 }
 
@@ -122,7 +122,7 @@ namespace proyectoInventario
             {
                 cn.Open();
 
-                string query = "SELECT PRECIO FROM Producto WHERE CLAVE = @clave";
+                string query = "SELECT PRECIO FROM Producto WHERE CLAVE = @clave AND DESCONTINUADO = false";
                 MySqlCommand cmd = new MySqlCommand(query, cn);
                 cmd.Parameters.AddWithValue("@clave", txtIDProducto.Text);
 
@@ -174,7 +174,7 @@ namespace proyectoInventario
                     try
                     {
                         // --- 0) Verificar stock disponible (con bloqueo FOR UPDATE) ---
-                        string sqlStock = "SELECT STOCK FROM Producto WHERE CLAVE = @clave FOR UPDATE";
+                        string sqlStock = "SELECT STOCK FROM Producto WHERE CLAVE = @clave AND DESCONTINUADO = false FOR UPDATE";
                         using (MySqlCommand cmdStock = new MySqlCommand(sqlStock, cn, trans))
                         {
                             cmdStock.Parameters.AddWithValue("@clave", txtIDProducto.Text);
@@ -182,8 +182,8 @@ namespace proyectoInventario
 
                             if (stockObj == null)
                             {
-                                // Producto no existe
-                                MessageBox.Show("El producto no existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                // Producto no existe o está descontinuado
+                                MessageBox.Show("El producto no existe o está descontinuado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 trans.Rollback();
                                 return;
                             }
@@ -209,7 +209,7 @@ namespace proyectoInventario
                             long idVenta = cmdVenta.LastInsertedId;
 
                             // --- 2) Obtener precio unitario del producto (ya dentro de la transacción) ---
-                            string getPrecio = "SELECT PRECIO FROM Producto WHERE CLAVE = @clave";
+                            string getPrecio = "SELECT PRECIO FROM Producto WHERE CLAVE = @clave AND DESCONTINUADO = false";
                             using (MySqlCommand cmdPrecio = new MySqlCommand(getPrecio, cn, trans))
                             {
                                 cmdPrecio.Parameters.AddWithValue("@clave", txtIDProducto.Text);

@@ -22,14 +22,14 @@ namespace proyectoInventario
   public Descontinuar()
         {
             //
-            // The InitializeComponent() call is required for Windows Forms designer support.
-            //
+ // The InitializeComponent() call is required for Windows Forms designer support.
+    //
+         InitializeComponent();
             CargarProductos();
-            InitializeComponent();
-    //
-    // TODO: Add constructor code after the InitializeComponent() call.
-    //
-    }
+ //
+  // TODO: Add constructor code after the InitializeComponent() call.
+            //
+        }
         
         private void BtnVolver_Click(object sender, EventArgs e)
         {
@@ -44,9 +44,9 @@ namespace proyectoInventario
         }
         private void CargarProductos()
         {
-            clsConsultas consultas = new clsConsultas();
-            // Actualizado para la nueva estructura de BD
-            DataTable productos = consultas.Select("SELECT CLAVE, NOMBRE, PRECIO, STOCK FROM Producto");
+        clsConsultas consultas = new clsConsultas();
+    // Solo mostrar productos que NO han sido descontinuados
+            DataTable productos = consultas.Select("SELECT CLAVE, NOMBRE, PRECIO, STOCK FROM Producto WHERE DESCONTINUADO = false");
    dgvProductos.DataSource = productos;
         }
         
