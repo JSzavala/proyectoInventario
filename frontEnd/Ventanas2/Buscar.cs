@@ -8,33 +8,102 @@
  */
 
 using System;
-using System.Drawing;
+using System.Data;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace proyectoInventario
 {
-    /// <summary>
-    /// Description of Buscar.
-    /// </summary>
     public partial class Buscar : Form
     {
+        private string connectionString = "Server=localhost;Database=VENTAS;Uid=root;Pwd=pum@s941;";
+
         public Buscar()
- {
- //
-  // The InitializeComponent() call is required for Windows Forms designer support.
-            //
+        {
             InitializeComponent();
-            
-            //
-      // TODO: Add constructor code after the InitializeComponent() call.
-       //
-    }
-        
+            this.Load += new EventHandler(Buscar_Load);
+
+            // Agregamos el evento que faltaba
+            btnBuscar.Click += new EventHandler(btnBuscar_Click);
+        }
+
+        private void Buscar_Load(object sender, EventArgs e)
+        {
+            BuscarProducto(""); // muestra todos los productos al iniciar
+        }
+
         private void BtnVolver_Click(object sender, EventArgs e)
         {
-       Main frmMain = new Main();
- frmMain.Show();
-   this.Close();
-      }
+            Main frmMain = new Main();
+            frmMain.Show();
+            this.Close();
+        }
+
+        private void BuscarProducto(string texto)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    string query = @"SELECT CLAVE, NOMBRE, DESCRIPCION, PRECIO, STOCK 
+                             FROM Producto
+                             WHERE CLAVE LIKE @valor OR NOMBRE LIKE @valor";
+
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@valor", "%" + texto + "%");
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    // Verificar si no hubo resultados
+                    if (dt.Rows.Count == 0)
+                    {
+                        MessageBox.Show(
+                            "No existe ningún producto con esa clave o nombre.",
+                            "Sin resultados",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Warning
+                        );
+
+                        return; 
+                    }
+
+                    // Si hay resultados, actualiza el DataGrid
+                    dgvProductos.DataSource = null;
+                    dgvProductos.Rows.Clear();
+                    dgvProductos.Refresh();
+
+                    dgvProductos.AutoGenerateColumns = true;
+                    dgvProductos.DataSource = dt;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al buscar: " + ex.Message);
+                }
+            }
+        }
+
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            string texto = txtIDProducto.Text.Trim();
+
+            if (string.IsNullOrEmpty(texto))
+            {
+                MessageBox.Show("Por favor ingresa una clave o nombre del producto.");
+                return;
+            }
+
+            BuscarProducto(texto);
+        }
+
+        private void btnRefrescar_Click(object sender, EventArgs e)
+        {
+            txtIDProducto.Text = "";
+            BuscarProducto("");
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace proyectoInventario
 	/// </summary>
 	public partial class RegistrarVenta : Form
 	{
-        private string connectionString = "Server=localhost;Database=VENTAS;Uid=root;Pwd=1234;";
+        private string connectionString = "Server=localhost;Database=VENTAS;Uid=root;Pwd=pum@s941;";
 
         public RegistrarVenta(RolUsuario rolUsuario)
 		{

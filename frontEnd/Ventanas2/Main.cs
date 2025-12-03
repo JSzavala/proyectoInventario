@@ -11,6 +11,9 @@ using proyectoInventario.frontEnd.Ventanas2;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
+using System.Data;
+
 
 namespace proyectoInventario
 {
@@ -19,18 +22,19 @@ namespace proyectoInventario
     /// </summary>
     public partial class Main : Form
     {
-    public Main()
-   {
-       //
-// The InitializeComponent() call is required for Windows Forms designer support.
-       //
+        private string connectionString = "Server=localhost;Database=VENTAS;Uid=root;Pwd=pum@s941;";
+
+        public Main()
+        {
             InitializeComponent();
-       
-   //
-     // TODO: Add constructor code after the InitializeComponent() call.
-        //
-   }
-        
+            this.Load += new EventHandler(Main_Load);
+        }
+
+        private void Main_Load(object sender, EventArgs e)
+        {
+            CargarProductos(); 
+        }
+
         private void BtnRegistrarProducto_Click(object sender, EventArgs e)
  {
             RegistrarProducto frmRegistrarProducto = new RegistrarProducto();
@@ -112,5 +116,30 @@ this.Hide();
             frmEstadisticas.Show();
             this.Hide();
         }
+
+        private void CargarProductos()
+        {
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    string query = @"SELECT CLAVE, NOMBRE, DESCRIPCION, PRECIO, STOCK 
+                             FROM Producto";
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
+                    DataTable dt = new DataTable();
+                    da.Fill(dt);
+
+                    dgvProductos.DataSource = dt; 
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error al cargar productos: " + ex.Message);
+                }
+            }
+        }
+
     }
 }

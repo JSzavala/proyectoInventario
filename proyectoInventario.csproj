@@ -179,6 +179,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frontEnd\Ventanas2\Buscar.resx">
+      <DependentUpon>Buscar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frontEnd\Ventanas2\Descontinuar.resx">
       <DependentUpon>Descontinuar.cs</DependentUpon>
     </EmbeddedResource>
